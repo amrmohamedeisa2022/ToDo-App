@@ -31,7 +31,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
-        // ✅ Skip public endpoints
+
         if (path.startsWith("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
@@ -39,7 +39,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // ✅ لو مفيش Authorization سيبه يكمل (هيترفض لو endpoint protected)
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -71,7 +70,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            // لو token بايظ سيبه، ال endpoint هيترفض لو محمي
+
             System.out.println("JWT Filter error: " + e.getMessage());
         }
 

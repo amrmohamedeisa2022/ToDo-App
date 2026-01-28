@@ -27,7 +27,7 @@ public class Otp {
     @Column(nullable = false)
     private LocalDateTime expirationTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)  //fetch data of user only if asked
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

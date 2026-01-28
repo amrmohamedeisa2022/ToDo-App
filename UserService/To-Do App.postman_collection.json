@@ -1,0 +1,300 @@
+{
+  "info": {
+    "_postman_id": "3319e8b9-c67b-4974-b380-a991a16c1020",
+    "name": "To-Do App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50213869",
+    "_collection_link": "https://go.postman.co/collection/50213869-3319e8b9-c67b-4974-b380-a991a16c1020?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"amreisa214@gmail.com\",\r\n  \"password\": \"1234\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"amreisa214@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "activateUser",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/activateUser?email=amreisa214@gmail.com&otp=585951",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "activateUser"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "amreisa214@gmail.com"
+            },
+            {
+              "key": "otp",
+              "value": "585951"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "regenerateOtp",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/regenerateOtp?email=amreisa214@gmail.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "regenerateOtp"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "amreisa214@gmail.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "forgetPassword",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/home/forgetPassword",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "forgetPassword"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "changePassword",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/changePassword?otp=123456&newPassword=9999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "changePassword"
+          ],
+          "query": [
+            {
+              "key": "otp",
+              "value": "123456"
+            },
+            {
+              "key": "newPassword",
+              "value": "9999"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "validateToken",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/validateToken",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "validateToken"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/update",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/home/delete",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "home",
+            "delete"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
