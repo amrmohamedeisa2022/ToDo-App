@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: UserService
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/todo_db
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: amrfouad4@gmail.com
+    password: "xxxxxx"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: MySuperSecretKeyForJwtHS256MustBeAtLeast32Chars!!
+  access:
+    expiration-ms: 3600000
