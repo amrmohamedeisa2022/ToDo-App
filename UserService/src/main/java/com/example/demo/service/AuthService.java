@@ -5,6 +5,7 @@ import com.example.demo.entity.Otp;
 import com.example.demo.entity.JwtToken;
 import com.example.demo.entity.TokenType;
 import com.example.demo.entity.User;
+import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.request.RegisterRequest;
 import com.example.demo.model.response.AuthenticationResponse;
@@ -15,6 +16,7 @@ import com.example.demo.repository.JwtTokenRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,32 +53,40 @@ public class AuthService {
     private EmailServiceImpl emailService;
 
 
-   public AuthenticationResponse login(LoginRequest loginRequest) throws Exception {
-     authenticationManager.authenticate(
-             new UsernamePasswordAuthenticationToken(
-                     loginRequest.getEmail(), loginRequest.getPassword()));
+    public AuthenticationResponse login(LoginRequest loginRequest) {
 
-     User user = userRepository.findByEmail(loginRequest.getEmail())
-             .orElseThrow(()->new RuntimeException("User not found"));
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Wrong password");
+        }
 
-     if(!user.isEnabled()) {
-         throw new RuntimeException("Account is not activated");
-     }
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-     Map<String,Object> extraClaims = new HashMap<>();
-     String token=jwtService.createToken(user,extraClaims);
+        if (!user.isEnabled()) {
+            throw new UserNotFoundException("Account is not activated");
+        }
 
-     saveUserToken(user,token);
+        Map<String, Object> extraClaims = new HashMap<>();
+        String token = jwtService.createToken(user, extraClaims);
 
-     return new AuthenticationResponse(user.getEmail(),token);
+        saveUserToken(user, token);
 
-   }
+        return new AuthenticationResponse(token, user.getEmail());
+    }
+
 
 
     public String register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new UserNotFoundException("Email already exists");
         }
 
         User user = User.builder()

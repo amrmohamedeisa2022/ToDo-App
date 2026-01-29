@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.scheduling.config.Task;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,14 +29,22 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank
+   @NotBlank
     @Column(nullable = false)
     private String password;
+
 
     @Column(nullable = false)
    private boolean enabled;
 
-   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] profileImage;
+
+    @Column(nullable = true)
+    private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Otp> Otps;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)

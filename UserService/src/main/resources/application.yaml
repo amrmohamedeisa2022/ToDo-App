@@ -23,8 +23,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: amrfouad4@gmail.com
-    password: "xxxxxx"
+    username: amrfouad514@gmail.com
+    password: "xuyc yqrz jcza vmgt"
     properties:
       mail:
         smtp:
@@ -32,7 +32,16 @@ spring:
           starttls:
             enable: true
 
+    servlet:
+      multipart:
+        max-file-size: 5MB
+        max-request-size: 5MB
+
 jwt:
   secret: MySuperSecretKeyForJwtHS256MustBeAtLeast32Chars!!
   access:
     expiration-ms: 3600000
+
+
+
+
