@@ -2,17 +2,14 @@ package com.example.demo.service;
 
 import com.example.demo.entity.JwtToken;
 import com.example.demo.entity.Otp;
-import com.example.demo.entity.JwtToken;
 import com.example.demo.entity.TokenType;
 import com.example.demo.entity.User;
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.request.RegisterRequest;
 import com.example.demo.model.response.AuthenticationResponse;
 import com.example.demo.repository.JwtTokenRepository;
 import com.example.demo.repository.OtpRepository;
-import com.example.demo.repository.OtpRepository;
-import com.example.demo.repository.JwtTokenRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,10 +64,10 @@ public class AuthService {
         }
 
         User user = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         if (!user.isEnabled()) {
-            throw new UserNotFoundException("Account is not activated");
+            throw new CustomException("Account is not activated");
         }
 
         Map<String, Object> extraClaims = new HashMap<>();
@@ -86,7 +83,7 @@ public class AuthService {
     public String register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new UserNotFoundException("Email already exists");
+            throw new CustomException("Email already exists");
         }
 
         User user = User.builder()

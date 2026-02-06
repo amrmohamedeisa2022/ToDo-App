@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.request.UpdateUserRequest;
 import com.example.demo.model.response.ProfileResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 public interface UserService {
 
     User createUser(User user);
-    User updateUser(String authorization, User user);
+    User updateUser(String authorization, UpdateUserRequest request);
     void deleteUserByEmail(String email);
     Optional<User> getUserByEmail(String email);
      void deleteUser(String authorization);

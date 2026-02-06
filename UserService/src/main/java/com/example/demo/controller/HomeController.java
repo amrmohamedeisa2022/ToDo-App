@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.request.UpdateUserRequest;
 import com.example.demo.model.response.ProfileResponse;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -107,10 +108,11 @@ public class HomeController {
     @PutMapping("/update")
     public ResponseEntity<User> update(
             @RequestHeader("Authorization") String authorization,
-            @RequestBody User user
+            @RequestBody UpdateUserRequest request
     ) {
-        return ResponseEntity.ok(userService.updateUser(authorization, user));
+        return ResponseEntity.ok(userService.updateUser(authorization, request));
     }
+
 
 
 

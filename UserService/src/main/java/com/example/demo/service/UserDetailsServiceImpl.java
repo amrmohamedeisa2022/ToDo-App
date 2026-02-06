@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return userRepository.findByEmail(username)
                 .orElseThrow(() ->
-                        new UserNotFoundException(
+                        new CustomException(
                                 "User not found with email: " + username
                         )
                 );

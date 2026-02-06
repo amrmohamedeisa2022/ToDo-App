@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.CustomException;
 import com.example.demo.entity.Otp;
 import com.example.demo.entity.User;
+import com.example.demo.model.request.UpdateUserRequest;
 import com.example.demo.model.response.ProfileResponse;
 import com.example.demo.repository.OtpRepository;
 import com.example.demo.repository.UserRepository;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         if(userRepository.existsByEmail(user.getEmail()))
         {
-           throw new RuntimeException("Email already exists");
+           throw new CustomException("Email already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(false);
@@ -48,32 +49,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(String authorization, User user) {
-
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new UserNotFoundException("Invalid Authorization header");
-        }
+    public User updateUser(String authorization, UpdateUserRequest request) {
 
         String token = authorization.replace("Bearer ", "").trim();
         String email = jwtService.extractEmail(token);
 
         User existingUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
-        if (user.getPassword() != null && !user.getPassword().isBlank()) {
-            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
+        if (request.getName() != null)
+            existingUser.setName(request.getName());
 
-        existingUser.setEnabled(existingUser.isEnabled());
+        if (request.getPassword() != null && !request.getPassword().isBlank())
+            existingUser.setPassword(passwordEncoder.encode(request.getPassword()));
+
 
         return userRepository.save(existingUser);
     }
 
 
+
     @Override
     public void deleteUserByEmail(String email) {
      User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
        userRepository.delete(user);
 
@@ -90,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public void forgetPassword(String email) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with this email"));
+                .orElseThrow(() -> new CustomException("User not found with this email"));
 
         Otp otp = otpService.generateOtp(user);
         otpRepository.save(otp);
@@ -106,21 +105,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User searchUser(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+                .orElseThrow(() -> new CustomException("User not found with email: " + email));
     }
 
     @Override
     public void createProfile(String authorization, String name, MultipartFile photo) {
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new RuntimeException("Invalid Authorization header");
+            throw new CustomException("Invalid Authorization header");
         }
 
         String token = authorization.replace("Bearer ", "").trim();
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         user.setName(name);
 
@@ -129,7 +128,7 @@ public class UserServiceImpl implements UserService {
                 user.setProfileImage(photo.getBytes());
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to store image in database");
+            throw new CustomException("Failed to store image in database");
         }
 
         userRepository.save(user);
@@ -146,7 +145,7 @@ public class UserServiceImpl implements UserService {
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         return new ProfileResponse(
                 user.getEmail(),
@@ -159,17 +158,17 @@ public class UserServiceImpl implements UserService {
     public byte[] getProfileImage(String authorization) {
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new RuntimeException("Invalid Authorization header");
+            throw new CustomException("Invalid Authorization header");
         }
 
         String token = authorization.replace("Bearer ", "").trim();
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         if (user.getProfileImage() == null) {
-            throw new RuntimeException("No profile image found");
+            throw new CustomException("No profile image found");
         }
 
         return user.getProfileImage();
@@ -181,14 +180,14 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String authorization) {
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new UserNotFoundException("Invalid Authorization header");
+            throw new CustomException("Invalid Authorization header");
         }
 
         String token = authorization.replace("Bearer ", "").trim();
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         userRepository.delete(user);
     }
@@ -199,17 +198,17 @@ public class UserServiceImpl implements UserService {
     public void changePassword(String authorization, String oldPassword, String newPassword) {
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new UserNotFoundException("Invalid Authorization header");
+            throw new CustomException("Invalid Authorization header");
         }
 
         String token = authorization.replace("Bearer ", "").trim();
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new UserNotFoundException("Old password is incorrect");
+            throw new CustomException("Old password is incorrect");
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -221,16 +220,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void activateUser(String email, String otp) {
    User user  = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
    Otp savedOtp=otpRepository.findTopByUserOrderByExpirationTimeDesc(user)
-           .orElseThrow(() -> new UserNotFoundException("OTP not found"));
+           .orElseThrow(() -> new CustomException("OTP not found"));
 
    if(!savedOtp.getOtp().equals(otp))
-       throw new UserNotFoundException("Invalid OTP");
+       throw new CustomException("Invalid OTP");
 
    if(savedOtp.getExpirationTime().isBefore(LocalDateTime.now()))
-       throw new UserNotFoundException("OTP expired");
+       throw new CustomException("OTP expired");
 
    user.setEnabled(true);
    userRepository.save(user);
@@ -243,17 +242,17 @@ public class UserServiceImpl implements UserService {
     public void resetPassword(String email, String otp, String newPassword) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with this email"));
+                .orElseThrow(() -> new CustomException("User not found with this email"));
 
         Otp savedOtp = otpRepository.findTopByUserOrderByExpirationTimeDesc(user)
-                .orElseThrow(() -> new UserNotFoundException("OTP not found"));
+                .orElseThrow(() -> new CustomException("OTP not found"));
 
         if (!savedOtp.getOtp().equals(otp)) {
-            throw new UserNotFoundException("Invalid OTP");
+            throw new CustomException("Invalid OTP");
         }
 
         if (savedOtp.getExpirationTime().isBefore(LocalDateTime.now())) {
-            throw new UserNotFoundException("OTP expired");
+            throw new CustomException("OTP expired");
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -267,7 +266,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String validateToken(String authorization) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new UserNotFoundException("Invalid Authorization header");
+            throw new CustomException("Invalid Authorization header");
         }
 
         String token = authorization.replace("Bearer ", "").trim();
@@ -275,7 +274,7 @@ public class UserServiceImpl implements UserService {
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException("User not found"));
 
         boolean valid = jwtService.isTokenValid(token, user);
 
