@@ -1,0 +1,621 @@
+{
+  "info": {
+    "_postman_id": "3319e8b9-c67b-4974-b380-a991a16c1020",
+    "name": "To-Do App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50213869",
+    "_collection_link": "https://go.postman.co/collection/50213869-3319e8b9-c67b-4974-b380-a991a16c1020?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "UserService",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"amreisa214@gmail.com\",\r\n  \"password\": \"1234\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"amreisa214@gmail.com\",\r\n  \"password\": \"2244\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "activateUser",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/home/activateUser?email=amreisa214@gmail.com&otp=585951",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "activateUser"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "amreisa214@gmail.com"
+                },
+                {
+                  "key": "otp",
+                  "value": "585951"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "resetPassword",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/home/resetPassword?email=amreisa214@gmail.com&otp=248494&newPassword=2244",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "resetPassword"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "amreisa214@gmail.com"
+                },
+                {
+                  "key": "otp",
+                  "value": "248494"
+                },
+                {
+                  "key": "newPassword",
+                  "value": "2244"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgetPassword",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/home/forgetPassword?email=amreisa214@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "forgetPassword"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "amreisa214@gmail.com",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "changePassword",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTY0NTQ5OSwiaWF0IjoxNzY5NjQxODk5fQ.uMGYVoDzu4QEu-MoPtlrlVSv7z1CGLQz2pKA5Lv4hUk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/home/changePassword?oldPassword=2244&newPassword=1122",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "changePassword"
+              ],
+              "query": [
+                {
+                  "key": "oldPassword",
+                  "value": "2244"
+                },
+                {
+                  "key": "newPassword",
+                  "value": "1122"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "validateToken",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzOTc5NywiaWF0IjoxNzY5NjM2MTk3fQ.-XfC6C9KcnmfZ0vhgKx2JLuYp1RHSjfz0ceHJ_tpYVs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/home/validateToken",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "validateToken"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzOTc5NywiaWF0IjoxNzY5NjM2MTk3fQ.-XfC6C9KcnmfZ0vhgKx2JLuYp1RHSjfz0ceHJ_tpYVs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"amreisa214@gmail.com\",\r\n  \"password\": \"1122\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/home/update",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTU2NzE1OCwiaWF0IjoxNzY5NTYzNTU4fQ.g3cjeJS9Qln4GvcEYWua2edgZb7fg9yQ4NCN3VeiwSA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/home/delete",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createProfile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTY1MzEwNSwiaWF0IjoxNzY5NjQ5NTA1fQ.BieWSJ5TAsfELk_OB-5oAKGMfaFtAecrTlx8R6MQzSY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Amr Fouad",
+                  "type": "text",
+                  "uuid": "aa5a42f6-ecdf-4b12-8245-1add99a05996"
+                },
+                {
+                  "key": "MultipartFile photo",
+                  "type": "file",
+                  "uuid": "be0121da-e7c7-4c34-bee0-4323e7a3f44d",
+                  "src": "/C:/Users/amr12/OneDrive/الصور/WhatsApp Image 2025-09-08 at 14.20.43_49b131b8.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/home/createProfile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home",
+                "createProfile"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Amr Fouad",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "MultipartFile photo",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getProfile",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "getProfileImage",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ToDoService",
+      "item": [
+        {
+          "name": "addItem",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzNTEzNCwiaWF0IjoxNzY5NjMxNTM0fQ.Y-rI9LBo_jGXdeUPgeeQLp8RIXgC4FYXKkzYa7o9uPw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Study JDBC\",\r\n  \"userId\": 4,\r\n  \"itemsDetails\": {\r\n    \"description\": \"Finish Todo service today\",\r\n    \"priority\": \"HIGH\",\r\n    \"status\": true\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/todo/item/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "add"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateItem",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzNTEzNCwiaWF0IjoxNzY5NjMxNTM0fQ.Y-rI9LBo_jGXdeUPgeeQLp8RIXgC4FYXKkzYa7o9uPw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Update Todo Item\",\r\n    \"userId\": 1,\r\n    \"itemsDetails\": {\r\n        \"description\": \"Finish Todo service today\",\r\n        \"createdAt\": \"2026-01-28T22:22:37.2712321\",\r\n        \"priority\": \"HIGH\",\r\n        \"status\": true\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/todo/item/update/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "update",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteItem",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzNTEzNCwiaWF0IjoxNzY5NjMxNTM0fQ.Y-rI9LBo_jGXdeUPgeeQLp8RIXgC4FYXKkzYa7o9uPw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/todo/item/delete/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "delete",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "searchItemById",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbXJlaXNhMjE0QGdtYWlsLmNvbSIsImV4cCI6MTc2OTYzNTEzNCwiaWF0IjoxNzY5NjMxNTM0fQ.Y-rI9LBo_jGXdeUPgeeQLp8RIXgC4FYXKkzYa7o9uPw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/todo/item/search/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "search",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "searchItemByTitle",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/todo/item/search?title=study Java",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "study Java"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllItems",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/todo/item/all?page=0&size=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "todo",
+                "item",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
